@@ -22,6 +22,10 @@ public class TasksTest {
         WebDriver driver = null;
         try {
             ChromeOptions options = new ChromeOptions();
+            if (Boolean.parseBoolean(System.getProperty("headless", "false"))) {
+                options.addArguments("--headless=new");
+            }
+            options.addArguments("--no-sandbox", "--window-size=1920,1080");
             driver = new RemoteWebDriver(new URL("http://localhost:4444"), options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.navigate().to("http://host.docker.internal:8001/tasks");
