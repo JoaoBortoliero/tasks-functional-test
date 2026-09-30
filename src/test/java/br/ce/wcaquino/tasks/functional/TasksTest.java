@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
 
@@ -18,12 +19,19 @@ public class TasksTest {
 
     public WebDriver acessarAplicacao() {
         try {
-            WebDriver driver = new ChromeDriver();
-            driver.navigate().to("http://localhost:8001/tasks");
+            ChromeOptions options = new ChromeOptions();
+            if (Boolean.parseBoolean(System.getProperty("headless", "false"))) {
+                options.addArguments("--headless=new");
+            }
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1920,1080");
+            WebDriver driver = new ChromeDriver(options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver.navigate().to("http://localhost:8001/tasks");
             return driver;
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException("Falha ao iniciar o navegador: " + e.getMessage(), e);
         }
     }
 
