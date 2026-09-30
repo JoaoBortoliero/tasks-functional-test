@@ -1,0 +1,32 @@
+# Maven
+target/**
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# IDEs (IntelliJ, Eclipse, VS Code)
+.idea/**
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/**
+.vscode/**
+
+# Relatórios de Testes e Logs (REST Assured / TestNG / JUnit)
+test-output/
+allure-results/
+allure-report/
+extent-reports/
+*.log
+
+# Dados sensíveis ou ambientes locais
+.env
+*.pem
+secrets.properties
