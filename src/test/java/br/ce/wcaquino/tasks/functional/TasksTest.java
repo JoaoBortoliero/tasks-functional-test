@@ -4,9 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.URL;
 import java.time.Duration;
 
 public class TasksTest {
@@ -18,19 +19,15 @@ public class TasksTest {
     private final By message = By.id("message");
 
     public WebDriver acessarAplicacao() {
+        WebDriver driver = null;
         try {
             ChromeOptions options = new ChromeOptions();
-            if (Boolean.parseBoolean(System.getProperty("headless", "false"))) {
-                options.addArguments("--headless=new");
-            }
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--window-size=1920,1080");
-            WebDriver driver = new ChromeDriver(options);
+            driver = new RemoteWebDriver(new URL("http://localhost:4444"), options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            driver.navigate().to("http://localhost:8001/tasks");
+            driver.navigate().to("http://host.docker.internal:8001/tasks");
             return driver;
         } catch (Exception e) {
+            if (driver != null) driver.quit();
             throw new RuntimeException("Falha ao iniciar o navegador: " + e.getMessage(), e);
         }
     }
